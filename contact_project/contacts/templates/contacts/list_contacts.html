@@ -1,0 +1,45 @@
+{% extends 'contacts/base.html' %}
+{% block content %}
+<h2 style="display: inline-block;">All Contacts</h2>
+
+<!-- Right-aligned buttons for Add New Contact, Export, and Import -->
+<div style="float: right; margin-top: -10px;">  <!-- Adjusts buttons to the right -->
+    <a href="{% url 'add_contact' %}" style="background-color: #3498db; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none;">Add New Contact</a>
+    <a href="{% url 'export_contacts' %}" style="background-color: #2980b9; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; margin-left: 10px;">Export Contacts</a>
+    <a href="{% url 'import_contacts' %}" style="background-color: #2980b9; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; margin-left: 10px;">Import Contacts</a>
+</div>
+
+<!-- Search Bar and Sort Buttons -->
+<div class="search-bar" style="margin-top: 20px;">
+    <form method="GET" style="display: inline-block;">
+        <input type="text" name="q" placeholder="Search contacts" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Sorting buttons for sorting contacts by name, creation date, or last modified -->
+    <button onclick="sortContacts('name')" style="background-color: #2ecc71; color: white; padding: 10px 15px; border-radius: 5px; margin-left: 10px;">Sort by Name</button>
+    <button onclick="sortContacts('created_at')" style="background-color: #2ecc71; color: white; padding: 10px 15px; border-radius: 5px; margin-left: 10px;">Sort by Date Added</button>
+    <button onclick="sortContacts('updated_at')" style="background-color: #2ecc71; color: white; padding: 10px 15px; border-radius: 5px; margin-left: 10px;">Sort by Last Modified</button>
+</div>
+
+<!-- Contacts List -->
+<ul style="margin-top: 20px;">
+    {% for contact in contacts %}
+        <li>
+            <!-- Link to the contact's details page -->
+            <a href="{% url 'contact_details' contact.id %}" style="text-decoration: none; color: #3498db;">{{ contact.name }}</a> - {{ contact.phone_number }}
+            <!-- Edit and Delete links for each contact -->
+            <a href="{% url 'edit_contact' contact.id %}">Edit</a> |
+            <a href="{% url 'delete_contact' contact.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+<!-- JavaScript for sorting functionality -->
+<script>
+    function sortContacts(sortBy) {
+        window.location.href = "?sort=" + sortBy;  // Redirect with the sorting query
+    }
+</script>
