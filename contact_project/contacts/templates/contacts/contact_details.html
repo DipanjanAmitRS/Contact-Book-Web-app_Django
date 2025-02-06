@@ -1,0 +1,16 @@
+{% extends 'contacts/base.html' %}
+{% block content %}
+<h2>Contact Details</h2>
+<div>
+    <strong>Name:</strong> {{ contact.name }}<br>
+    <strong>Phone Number:</strong> {{ contact.phone_number }}<br>
+    <strong>Email:</strong> {{ contact.email }}<br>
+    <strong>Address:</strong> {{ contact.address }}<br>
+    <strong>Company:</strong> {{ contact.company }}<br>
+    <strong>Notes:</strong> {{ contact.notes }}<br>
+    <strong>Created at:</strong> {{ contact.created_at }}<br>
+    <strong>Last modified:</strong> {{ contact.updated_at }}<br>  <!-- Assuming you have an 'updated_at' field -->
+</div>
+<br>
+<a href="{% url 'list_contacts' %}">Back to Contact List</a>
+{% endblock %}
